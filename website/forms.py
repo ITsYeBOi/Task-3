@@ -4,6 +4,16 @@ from wtforms.fields import TextAreaField, SubmitField, StringField, PasswordFiel
 from wtforms.validators import InputRequired, Length, Email, EqualTo
 from flask_wtf.file import FileRequired, FileField, FileAllowed 
 
+ALLOWED_FILE = {'PNG', 'JPG', 'png', 'jpg'}
+
+#creates an event listing
+class EventForm(FlaskForm):
+    name = StringField('')
+    description = TextAreaField('Description', validators=[InputRequired()])
+    image = FileField('Event Image', validators=[FileRequired(message='Image cannot be empty'), FileAllowed(ALLOWED_FILE, message='File is not supported')])
+    price = StringField('Price', validators=[InputRequired()])
+    submit = SubmitField("Create")
+
 
 #creates the login information
 class LoginForm(FlaskForm):
