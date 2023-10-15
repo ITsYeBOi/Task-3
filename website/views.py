@@ -1,5 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for
-from . import db
+
+from . import db  # Import the db object
+
 
 mainbp = Blueprint('main', __name__)
 

@@ -20,8 +20,7 @@ def create_app():
     #initialise db with flask app
     db.init_app(app)
     
-    #initialize the login manager
-    login_manager = LoginManager()
+   
     
     #set the name of the login function that lets user login
     login_manager = LoginManager()
