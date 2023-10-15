@@ -6,8 +6,7 @@ mainbp = Blueprint('main', __name__)
 
 @mainbp.route('/')
 def index():
-    return '<h1>Starter code for the assessment<h1>'
-
+    return render_template('index.html')
 @mainbp.route('/search')
 def search():
     if request.args['search'] and request.args['search'] != "":
