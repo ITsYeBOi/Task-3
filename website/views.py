@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for
-from .models import db
+from . import db
 
 mainbp = Blueprint('main', __name__)
 
@@ -7,6 +7,7 @@ mainbp = Blueprint('main', __name__)
 @mainbp.route('/')
 def index():
     return render_template('index.html')
+
 @mainbp.route('/search')
 def search():
     if request.args['search'] and request.args['search'] != "":
