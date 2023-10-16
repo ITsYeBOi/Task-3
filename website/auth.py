@@ -17,8 +17,8 @@ def register(): #view function
             uname = register.user_name.data
             pwd = register.password.data
             email = register.email_id.data
-            u1 = User.query.filter_by(name=uname).first()
-            if u1:
+            user = db.session.scalar(db.select(User).where(User.name==uname))
+            if user:
                 flash('User name already exists, please login')
                 return redirect(url_for('auth.login'))
             pwd_hash = generate_password_hash(pwd)
@@ -36,13 +36,13 @@ def login(): #view function
     if(login_form.validate_on_submit()==True):
             user_name = login_form.user_name.data
             password = login_form.password.data
-            u1 = User.query.filter_by(name=user_name).first()
-            if u1 is None:
+            user = db.session.scalar(db.select(User).where(User.name==user_name))
+            if user is None:
                 error="Incorrect user name"
-            elif not check_password_hash(u1.password_hash, password):
+            elif not check_password_hash(user.password_hash, password):
                 error="Incorrect password"
             if error is None:
-                 login_user(u1)
+                 login_user(user)
                  return redirect(url_for('main.index'))
             else:
                  flash(error)

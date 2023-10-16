@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% from 'bootstrap5/form.html' import render_form %}
+
+{% block content %}
+
+<div class="container mt-4">  
+    <div class="row">  
+      <div class="col-md-12">
+        <div class="image-container">
+            <img class="align-self-start mr-3" src="{{ event.image }}">
+        </div>
+      </div>
+      <div class="row mt-4">
+        <div class="col-12">
+          <h2 class="info-heading">{{ event.name }}</h2>
+          <p class="info-heading"><strong>Date:</strong>{{ event.date }}</p>
+          <p class="info-heading"><strong>Venue:</strong></p>
+          <p class="text-justify">{{ event.description }}</p>
+          <hr>
+        </div>
+      </div>
+
+      <!-- New Ticket Selection Section -->
+      <div class="row mt-4">
+        <div class="col-12">
+          <h2>Select Your Tickets</h2>
+        </div>
+        
+
+        <!-- Adult General Admission Ticket -->
+        <div class="col-md-4">
+          <div class="card mb-3">
+            <div class="card-body">
+              <h5 class="card-title">Adult (18+ Years Only)</h5>
+              <p>General Admission</p>
+              <p>$79.90 each</p>
+              <select class="form-select">
+                <option value="0" selected>0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+              </select>                  
+            </div>
+          </div>
+        </div>
+      </div> 
+    <!-- Booking Button -->
+    <button id="bookButton" class="btn btn-primary">Book Now</button> 
+    </div>  
+ 
+    
+    <!-- Comments -->  
+    <div class="row">  
+      <div class="col-md-12">  
+        <h2>Comments</h1>  
+      </div>  
+    </div>  
+ 
+    <div class="row border-bottom"> 
+      {{ render_form(form,"/events/{0}/comment".format(event.id)) }}
+      
+      {% for comment in event.comments %}
+      <div class="col-md-12">  
+        <b>{{ comment.user.name }} <span class="ml-2 text-muted">January 2024</span></b>
+        <p>{{ comment.text }}</p>  
+      </div> 
+      {% endfor %} 
+    </div>  
+  </div> 
+
+{% endblock %}

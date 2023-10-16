@@ -2,10 +2,13 @@
 {% import "bootstrap5/form.html" as wtf %}
 
 {% block content %}
-<div class="container-fluid">
+
+
+<div class="container">
     <div class="page-header">
         <h4>{{heading}}</h4>
     </div>
+
 
     <!-- Form rendering is simple and easy if using WTForms -->
     <!-- If you want more granular control, declare the form manually: -->
@@ -34,4 +37,6 @@
     </div>
     {% endif %}
 </div>
+
+
 {% endblock %}

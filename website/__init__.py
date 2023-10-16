@@ -20,7 +20,9 @@ def create_app():
     #initialise db with flask app
     db.init_app(app)
     
-   
+    #config upload folder
+    UPLOAD_FOLDER = '/static/image'
+    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER    
     
     #set the name of the login function that lets user login
     login_manager = LoginManager()
@@ -33,11 +35,11 @@ def create_app():
     def load_user(user_id):
         return User.query.get(int(user_id))
 
-    #importing views module here to avoid circular references
-    # a common practice.
+  #add Blueprints
     from . import views
     app.register_blueprint(views.mainbp)
-
+    from . import events
+    app.register_blueprint(events.bp)
     from . import auth
     app.register_blueprint(auth.bp)
     

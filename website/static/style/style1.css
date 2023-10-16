@@ -141,3 +141,18 @@ p {
   padding: 10px;
   font-family: 'Arial', sans-serif;
 }
+
+.image-container {
+  overflow: hidden; /* Hide overflowing content */
+  display: flex; /* Enable flex layout */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+}
+.image-container img {
+  width: 100%; /* Fill the entire container horizontally */
+  height: 100%; /* Fill the entire container vertically */
+  object-fit: cover; /* Scale and crop the image to fill the container */
+}
+
+
+

@@ -8,10 +8,11 @@ ALLOWED_FILE = {'PNG', 'JPG', 'png', 'jpg'}
 
 #creates an event listing
 class EventForm(FlaskForm):
-    name = StringField('')
-    description = TextAreaField('Description', validators=[InputRequired()])
+    name = StringField('Event Name', validators=[InputRequired()])
+    description = TextAreaField('Event Description', validators=[InputRequired()])
+    date = TextAreaField('Event Date', validators=[InputRequired()])
+    venue = TextAreaField('Event Venue', validators=[InputRequired()])
     image = FileField('Event Image', validators=[FileRequired(message='Image cannot be empty'), FileAllowed(ALLOWED_FILE, message='File is not supported')])
-    price = StringField('Price', validators=[InputRequired()])
     submit = SubmitField("Create")
 
 
@@ -32,4 +33,9 @@ class RegisterForm(FlaskForm):
 
     #submit button
     submit = SubmitField("Register")
+
+#User comment
+class CommentForm(FlaskForm):
+  text = TextAreaField('Comment', [InputRequired()])
+  submit = SubmitField('Create')
 
