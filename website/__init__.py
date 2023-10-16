@@ -7,8 +7,6 @@ import datetime
 
 db=SQLAlchemy()
 
-#create a function that creates a web application
-# a web server will run this web application
 def create_app():
     
     app=Flask(__name__)
@@ -16,16 +14,12 @@ def create_app():
     Bootstrap5(app)
   
     app.secret_key='somesecretgoeshere'
-    #set the app configuration data 
-    app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///website113.sqlite'
-    #initialise db with flask app
+    app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///website1153.sqlite'
     db.init_app(app)
     
-    #config upload folder
     UPLOAD_FOLDER = '/static/image'
     app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER    
-    
-    #set the name of the login function that lets user login
+
     login_manager = LoginManager()
     login_manager.login_view='auth.login'
     login_manager.init_app(app)

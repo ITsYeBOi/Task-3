@@ -1,6 +1,6 @@
 
 from flask_wtf import FlaskForm
-from wtforms.fields import TextAreaField, SubmitField, StringField, PasswordField
+from wtforms.fields import TextAreaField, SubmitField, IntegerField, StringField, PasswordField
 from wtforms.validators import InputRequired, Length, Email, EqualTo
 from flask_wtf.file import FileRequired, FileField, FileAllowed 
 
@@ -14,7 +14,6 @@ class EventForm(FlaskForm):
     date = TextAreaField('Event Date', validators=[InputRequired()])
     image = FileField('Event Image', validators=[FileRequired(message='Image cannot be empty'), FileAllowed(ALLOWED_FILE, message='File is not supported')])
     submit = SubmitField("Create")
-
 
 #creates the login information
 class LoginForm(FlaskForm):
