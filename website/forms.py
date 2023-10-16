@@ -10,8 +10,8 @@ ALLOWED_FILE = {'PNG', 'JPG', 'png', 'jpg'}
 class EventForm(FlaskForm):
     name = StringField('Event Name', validators=[InputRequired()])
     description = TextAreaField('Event Description', validators=[InputRequired()])
-    date = TextAreaField('Event Date', validators=[InputRequired()])
     venue = TextAreaField('Event Venue', validators=[InputRequired()])
+    date = TextAreaField('Event Date', validators=[InputRequired()])
     image = FileField('Event Image', validators=[FileRequired(message='Image cannot be empty'), FileAllowed(ALLOWED_FILE, message='File is not supported')])
     submit = SubmitField("Create")
 

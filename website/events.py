@@ -24,7 +24,7 @@ def create():
   if form.validate_on_submit():
     #call the function that checks and returns image
     db_file_path = check_upload_file(form)
-    event = Event(name=form.name.data,description=form.description.data,image=db_file_path,date=form.date.data,venue=form.venue.data)
+    event = Event(name=form.name.data,description=form.description.data,image=db_file_path,venue=form.venue.data,date=form.date.data)
     # add the object to the db session
     db.session.add(event)
     # commit to the database

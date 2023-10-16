@@ -1,23 +1,23 @@
 from flask import Flask, render_template
-from flask_bootstrap import Bootstrap
+from flask_bootstrap import Bootstrap5
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_bcrypt import Bcrypt
 import datetime
 
 db=SQLAlchemy()
-app=Flask(__name__)
 
 #create a function that creates a web application
 # a web server will run this web application
 def create_app():
-
-    bootstrap = Bootstrap(app)
+    
+    app=Flask(__name__)
+    
+    Bootstrap5(app)
   
-    app.debug=True
     app.secret_key='somesecretgoeshere'
     #set the app configuration data 
-    app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///website123.sqlite'
+    app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///website113.sqlite'
     #initialise db with flask app
     db.init_app(app)
     

@@ -20,9 +20,9 @@ class Event(db.Model):
     __tablename__ = 'events'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80))
-    date = db.Column(db.String(80))
-    venue = db.Column(db.String(80))
     description = db.Column(db.String(200))
+    date = db.Column(db.String(200))
+    venue = db.Column(db.String(200))
     image = db.Column(db.String(400))
     # ... Create the Comments db.relationship
     comments = db.relationship('Comment', backref='event')
