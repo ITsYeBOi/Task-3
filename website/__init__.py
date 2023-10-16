@@ -1,8 +1,9 @@
-#from package import Class
-from flask import Flask
-from flask_bootstrap import Bootstrap5
+from flask import Flask, render_template
+from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+from flask_bcrypt import Bcrypt
+import datetime
 
 db=SQLAlchemy()
 app=Flask(__name__)
@@ -11,7 +12,7 @@ app=Flask(__name__)
 # a web server will run this web application
 def create_app():
 
-    bootstrap = Bootstrap5(app)
+    bootstrap = Bootstrap(app)
   
     app.debug=True
     app.secret_key='somesecretgoeshere'
