@@ -3,42 +3,47 @@ from flask_bootstrap import Bootstrap5
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_bcrypt import Bcrypt
-import datetime
 
-db=SQLAlchemy()
+# Initialize SQLAlchemy
+db = SQLAlchemy()
 
 def create_app():
+    # Create a Flask application instance
+    app = Flask(__name__)
     
-    app=Flask(__name__)
-    
+    # Initialize Bootstrap for the app
     Bootstrap5(app)
-  
-    app.secret_key='somesecretgoeshere'
-    app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///website1153.sqlite'
-    db.init_app(app)
     
-    UPLOAD_FOLDER = '/static/image'
-    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER    
+    # Set the secret key for the app
+    app.secret_key = 'somesecretgoeshere'
+    
+    # Configure the SQLAlchemy database URI
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///website1153.sqlite'
+    
+    # Initialize the SQLAlchemy database with the app
+    db.init_app(app)
 
+    # Define the upload folder for static files
+    UPLOAD_FOLDER = '/static/image'
+    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+    # Initialize the LoginManager for user authentication
     login_manager = LoginManager()
-    login_manager.login_view='auth.login'
+    login_manager.login_view = 'auth.login'  # Set the login view
     login_manager.init_app(app)
 
-    #create a user loader function takes userid and returns User
-    from .models import User  # importing here to avoid circular references
+    # Define a user loader function for LoginManager
+    from .models import User  # Import the User model
     @login_manager.user_loader
     def load_user(user_id):
         return User.query.get(int(user_id))
 
-  #add Blueprints
+    # Register Blueprints for different parts of the application
     from . import views
-    app.register_blueprint(views.mainbp)
+    app.register_blueprint(views.mainbp)  # Main Blueprint
     from . import events
-    app.register_blueprint(events.bp)
+    app.register_blueprint(events.bp)  # Events Blueprint
     from . import auth
-    app.register_blueprint(auth.bp)
-    
+    app.register_blueprint(auth.bp)  # Authentication Blueprint
+
     return app
-
-
-

@@ -4,66 +4,64 @@ from .forms import EventForm, CommentForm
 from . import db
 import os
 from werkzeug.utils import secure_filename
-#additional import:
 from flask_login import login_required, current_user
 
+# Create a Blueprint for events
 bp = Blueprint('event', __name__, url_prefix='/events')
 
+# Show the details of an event
 @bp.route('/<id>')
 def show(id):
-    event = db.session.scalar(db.select(Event).where(Event.id==id))
-    # create the comment form
-    form = CommentForm()    
+    # Retrieve the event with the given ID
+    event = db.session.scalar(db.select(Event).where(Event.id == id))
+    # Create a CommentForm
+    form = CommentForm()
     return render_template('events/show.html', event=event, form=form)
 
+# Create a new event
 @bp.route('/create', methods=['GET', 'POST'])
 @login_required
 def create():
-  print('Method type: ', request.method)
-  form = EventForm()
-  if form.validate_on_submit():
-    #call the function that checks and returns image
-    db_file_path = check_upload_file(form)
-    event = Event(name=form.name.data,description=form.description.data,image=db_file_path,venue=form.venue.data,date=form.date.data)
-    # add the object to the db session
-    db.session.add(event)
-    # commit to the database
-    db.session.commit()
-    flash('Successfully created new event', 'success')
-    #Always end with redirect when form is valid
-    return redirect(url_for('event.create'))
-  return render_template('events/create.html', form=form)
+    form = EventForm()
+    if form.validate_on_submit():
+        db_file_path = check_upload_file(form)
+        # Create a new event and add it to the database
+        event = Event(
+            name=form.name.data,
+            description=form.description.data,
+            image=db_file_path,
+            venue=form.venue.data,
+            date=form.date.data
+        )
+        db.session.add(event)
+        db.session.commit()
+        flash('Successfully created new event', 'success')
+        return redirect(url_for('event.create'))
+    return render_template('events/create.html', form=form)
 
+# Function to handle file uploads
 def check_upload_file(form):
-  #get file data from form  
-  fp = form.image.data
-  filename = fp.filename
-  #get the current path of the module file… store image file relative to this path  
-  BASE_PATH = os.path.dirname(__file__)
-  #upload file location – directory of this file/static/image
-  upload_path = os.path.join(BASE_PATH, 'static/image', secure_filename(filename))
-  #store relative path in DB as image location in HTML is relative
-  db_upload_path = '/static/image/' + secure_filename(filename)
-  #save the file and return the db upload path
-  fp.save(upload_path)
-  return db_upload_path
+    fp = form.image.data
+    filename = fp.filename
+    BASE_PATH = os.path.dirname(__file__)
+    upload_path = os.path.join(BASE_PATH, 'static/image', secure_filename(filename))
+    db_upload_path = '/static/image/' + secure_filename(filename)
+    fp.save(upload_path)
+    return db_upload_path
 
-@bp.route('/<id>/comment', methods=['GET', 'POST'])  
+# Add a comment to an event
+@bp.route('/<id>/comment', methods=['GET', 'POST'])
 @login_required
-def comment(id):  
-    form = CommentForm()  
-    #get the destination object associated to the page and the comment
-    event = db.session.scalar(db.select(Event).where(Event.id==id))
-    if form.validate_on_submit():  
-      #read the comment from the form
-      comment = Comment(text=form.text.data, event=event,
-                        user=current_user) 
-      #here the back-referencing works - comment.destination is set
-      # and the link is created
-      db.session.add(comment) 
-      db.session.commit() 
-      #flashing a message which needs to be handled by the html
-      flash('Your comment has been added', 'success')  
-      # print('Your comment has been added', 'success') 
-    # using redirect sends a GET request to destination.show
+def comment(id):
+    form = CommentForm()
+    event = db.session.scalar(db.select(Event).where(Event.id == id))
+    if form.validate_on_submit():
+        comment = Comment(
+            text=form.text.data,
+            event=event,
+            user=current_user
+        )
+        db.session.add(comment)
+        db.session.commit()
+        flash('Your comment has been added', 'success')
     return redirect(url_for('event.show', id=id))
