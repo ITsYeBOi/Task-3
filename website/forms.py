@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms.fields import TextAreaField, SubmitField, IntegerField, StringField, PasswordField
-from wtforms.validators import InputRequired, Length, Email, EqualTo
+from wtforms.validators import InputRequired, Length, Email, EqualTo, NumberRange
 from flask_wtf.file import FileRequired, FileField, FileAllowed 
 
 # Define a set of allowed image file extensions
@@ -33,3 +33,8 @@ class RegisterForm(FlaskForm):
 class CommentForm(FlaskForm):
     text = TextAreaField('Comment', [InputRequired()])
     submit = SubmitField('Create')
+
+# Form for buying tickets
+class BookingForm(FlaskForm):
+    ticket_quantity = IntegerField('Number of Tickets', validators=[NumberRange(min=1, message='Please select at least 1 ticket')])
+    submit = SubmitField('Book Tickets')

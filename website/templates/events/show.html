@@ -29,32 +29,12 @@
         
 
         <!-- Adult General Admission Ticket -->
-        <div class="col-md-4">
-          <div class="card mb-3">
-            <div class="card-body">
-              <h5 class="card-title">Adult (18+ Years Only)</h5>
-              <p>General Admission</p>
-              <p>$79.90 each</p>
-              <select class="form-select">
-                <option value="0" selected>0</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-              </select>                  
-            </div>
-          </div>
-        </div>
+        <form method="POST" action="{{ url_for('event.book', id=event.id) }}">
+          {{ render_form(booking_form) }}
+      </form>
+      
+      
       </div> 
-<!-- Booking Button -->
-<a href="#" class="btn green-button">BUY TICKETS</a>
-</div>
-
- 
  
     
     <!-- Comments -->  

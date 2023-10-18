@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% import "bootstrap5/form.html" as wtf %}
+
+{% block content %}
+  <h1>Your Booking History</h1>
+  <ul>
+    {% for booking in user_bookings %}
+      <li>
+        <strong>Event:</strong> {{ booking.event.name }}<br>
+        <strong>Quantity:</strong> {{ booking.quantity }}<br>
+        <strong>Booking Reference:</strong> {{ booking.booking_reference }}<br>
+        <strong>Timestamp:</strong> {{ booking.timestamp }}
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}

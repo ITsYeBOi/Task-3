@@ -24,9 +24,30 @@ class Event(db.Model):
     venue = db.Column(db.String(200))  # Event venue
     image = db.Column(db.String(400))  # Event image
     comments = db.relationship('Comment', backref='event')  # Relationship to comments
+
     
     def __repr__(self):
         return f"Name: {self.name}"
+    
+    # Additional methods as needed
+
+# models.py
+class Booking(db.Model):
+    __tablename__ = 'bookings'
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    event_id = db.Column(db.Integer, db.ForeignKey('events.id'))
+    quantity = db.Column(db.Integer)
+    booking_reference = db.Column(db.String(50))
+    is_history = db.Column(db.Boolean, default=False)  
+
+    def __init__(self, user_id, event_id, quantity, booking_reference, is_history=False):
+        self.user_id = user_id
+        self.event_id = event_id
+        self.quantity = quantity
+        self.booking_reference = booking_reference
+        self.is_history = is_history  # Set is_history to False by default for new bookings
+
 
 # Comment model for storing user comments
 class Comment(db.Model):
