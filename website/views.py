@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from .models import Event
 from . import db
+from sqlalchemy import or_
 
 # Create a Blueprint for the main part of the application
 mainbp = Blueprint('main', __name__)
@@ -15,12 +16,12 @@ def index():
 # Route to search for events
 @mainbp.route('/search')
 def search():
-    if request.args['search'] and request.args['search'] != "":
-        # Get the search query from the request
+    if 'search' in request.args and request.args['search']:
         query = "%" + request.args['search'] + "%"
-        # Search for events whose description contains the query
-        events = db.session.scalars(db.select(Event)).where(Event.description.like(query))
+        # Create a query with a filter condition using "or_"
+        events = db.session.query(Event).filter(
+            or_(Event.description.like(query))
+        ).all()
         return render_template('index.html', events=events)
     else:
-        # If no search query provided, redirect to the main index page
         return redirect(url_for('main.index'))

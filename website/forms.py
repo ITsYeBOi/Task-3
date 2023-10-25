@@ -4,7 +4,7 @@ from wtforms.validators import InputRequired, Length, Email, EqualTo, NumberRang
 from flask_wtf.file import FileRequired, FileField, FileAllowed 
 
 # Define a set of allowed image file extensions
-ALLOWED_FILE = {'PNG', 'JPG', 'png', 'jpg'}
+ALLOWED_FILE = {'PNG', 'JPG', 'png', 'jpg', 'jpeg'}
 
 # Form for creating an event
 class EventForm(FlaskForm):
