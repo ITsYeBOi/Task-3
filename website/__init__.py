@@ -45,5 +45,6 @@ def create_app():
     app.register_blueprint(events.bp)  # Events Blueprint
     from . import auth
     app.register_blueprint(auth.bp)  # Authentication Blueprint
+    
 
     return app
