@@ -12,6 +12,7 @@ class EventForm(FlaskForm):
     description = TextAreaField('Event Description', validators=[InputRequired()])
     venue = TextAreaField('Event Venue', validators=[InputRequired()])
     date = TextAreaField('Event Date', validators=[InputRequired()])
+    status = TextAreaField('Event Status', validators=[InputRequired()])
     image = FileField('Event Image', validators=[FileRequired(message='Image cannot be empty'), FileAllowed(ALLOWED_FILE, message='File is not supported')])
     submit = SubmitField("Create")
 

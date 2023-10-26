@@ -21,6 +21,7 @@ class Event(db.Model):
     name = db.Column(db.String(80))  # Event name
     description = db.Column(db.String(200))  # Event description
     date = db.Column(db.String(200))  # Event date
+    status = db.Column(db.String(200))  # Event date
     venue = db.Column(db.String(200))  # Event venue
     image = db.Column(db.String(400))  # Event image
     comments = db.relationship('Comment', backref='event')  # Relationship to comments
@@ -40,6 +41,7 @@ class Booking(db.Model):
     quantity = db.Column(db.Integer)
     booking_reference = db.Column(db.String(50))
     is_history = db.Column(db.Boolean, default=False)  
+    event = db.relationship('Event', backref='bookings')
 
     def __init__(self, user_id, event_id, quantity, booking_reference, is_history=False):
         self.user_id = user_id

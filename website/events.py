@@ -7,6 +7,7 @@ from werkzeug.utils import secure_filename
 from flask_login import login_required, current_user
 import uuid
 from .booking import calculate_ticket_price, generate_booking_reference
+from .models import Booking
 
 
 # Create a Blueprint for events
@@ -42,6 +43,7 @@ def create():
             description=form.description.data,
             image=db_file_path,
             venue=form.venue.data,
+            status=form.status.data,
             date=form.date.data
         )
         db.session.add(event)
@@ -95,7 +97,7 @@ def book(id):
             event_id=event.id,
             quantity=ticket_quantity,
             booking_reference=booking_reference,
-            is_history=False  # This is not in booking history
+            is_history=True  # This is not in booking history
         )
         db.session.add(booking)
         db.session.commit()
