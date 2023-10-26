@@ -65,4 +65,5 @@ def login():
 def logout():
     # Log the user out
     logout_user()
-    return 'You have been logged out'
+    # return 'You have been logged out'
+    return render_template('logout.html', heading='Loginout')
