@@ -24,6 +24,7 @@ def show(id):
 
     if booking_form.validate_on_submit():
         ticket_quantity = int(booking_form.ticket_quantity.data)
+        ticket_type = str(booking_form.ticket_type.data)
         # Handle the ticket purchase, generate booking reference, and other actions here
         # ...
 
@@ -90,12 +91,14 @@ def book(id):
         ticket_quantity = form.ticket_quantity.data
         total_price = calculate_ticket_price(ticket_quantity)
         booking_reference = generate_booking_reference(event, current_user)
+        ticket_type = form.ticket_type.data  # Get ticket_type from the form
 
         # Create a new Booking instance for the current booking
         booking = Booking(
             user_id=current_user.id,
             event_id=event.id,
             quantity=ticket_quantity,
+            ticket_type=ticket_type,  # Include ticket_type
             booking_reference=booking_reference,
             is_history=True  # This is not in booking history
         )

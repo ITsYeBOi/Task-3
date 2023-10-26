@@ -7,6 +7,7 @@
     {% for booking in user_bookings %}
       <li>
         <strong>Event:</strong> {{ booking.event.name }}<br>
+        <strong>Ticket Type:</strong> {{ booking.ticket_type }}<br>
         <strong>Quantity:</strong> {{ booking.quantity }}<br>
         <strong>Booking Reference:</strong> {{ booking.booking_reference }}<br>
         <strong>Timestamp:</strong> {{ booking.timestamp }}
