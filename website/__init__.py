@@ -18,7 +18,7 @@ def create_app():
     app.secret_key = 'somesecretgoeshere'
     
     # Configure the SQLAlchemy database URI
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///website41.sqlite'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///website4143.sqlite'
     
     # Initialize the SQLAlchemy database with the app
     db.init_app(app)

@@ -32,6 +32,7 @@
         <div class="col-md-1 col-12 text-center">
           <button class="btn btn-primary">Invoice</button>
         </div>
+        <hr>
       </div>
     {% else %}
       <div class="row mt-3">
@@ -41,44 +42,44 @@
       </div>
     {% endfor %}
 
+  
+   
     <h1>Your Created Events</h1>
-  <!-- Events Table -->
-  <div class="table-responsive">
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Description</th>
-          <th>Date</th>
-          <th>Status</th>
-          <th>Venue</th>
-          <th>Image</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for event in user_created_events %}
-          <tr>
-            <td>{{ event.id }}</td>
-            <td>{{ event.name }}</td>
-            <td>{{ event.description }}</td>
-            <td>{{ event.date }}</td>
-            <td>{{ event.status }}</td>
-            <td>{{ event.venue }}</td>
-            <td>
-              {% if event.image %}
-                <img src="{{ event.image }}" alt="{{ event.name }}" style="width: 100px; height: auto;">
-              {% else %}
-                No Image
-              {% endif %}
-            </td>
-          </tr>
-        {% else %}
-          <tr>
-            <td colspan="7">No events found.</td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+    <div class="row mt-3">
+      <!-- Table Headers for Events -->
+      <div class="col-md-4 col-12"><strong>Event Name</strong></div>
+      <div class="col-md-2 col-12"><strong>Description</strong></div>
+      <div class="col-md-3 col-12"><strong>Event Date</strong></div>
+      <div class="col-md-2 col-12"><strong>Status</strong></div>
+      <div class="col-md-1 col-12"><strong>Actions</strong></div>
+    </div>
+
+    <!-- Event Rows -->
+    {% for event in user_events %}
+      <div class="row mt-3 flex-md-row flex-column align-items-md-center">
+        <div class="col-md-4 col-12">
+          {{ event.name }}
+        </div>
+        <div class="col-md-2 col-12">
+          {{ event.description }}
+        </div>
+        <div class="col-md-3 col-12">
+          {{ event.date }}
+        </div>
+        <div class="col-md-2 col-12">
+          {{ event.status }}
+        </div>
+        <div class="col-md-1 col-12 text-center">
+          <a href="{{ url_for('event.show', id=event.id) }}" class="btn btn-primary">View</a>
+        </div>
+        <hr>
+      </div>
+    {% else %}
+      <div class="row mt-3">
+        <div class="col-12">
+          <p>No events found.</p>
+        </div>
+      </div>
+    {% endfor %}
   </div>
 {% endblock %}

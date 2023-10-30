@@ -6,7 +6,7 @@ import os
 from werkzeug.utils import secure_filename
 from flask_login import login_required, current_user
 import uuid
-from .booking import calculate_ticket_price, generate_booking_reference
+from .booking import generate_booking_reference
 from .models import Booking
 
 
@@ -25,8 +25,6 @@ def show(id):
     if booking_form.validate_on_submit():
         ticket_quantity = int(booking_form.ticket_quantity.data)
         ticket_type = str(booking_form.ticket_type.data)
-        # Handle the ticket purchase, generate booking reference, and other actions here
-        # ...
 
     return render_template('events/show.html', event=event, form=form, booking_form=booking_form)
 
@@ -45,7 +43,8 @@ def create():
             image=db_file_path,
             venue=form.venue.data,
             status=form.status.data,
-            date=form.date.data
+            date=form.date.data,
+            user_id=current_user.id  # Assign the user ID
         )
         db.session.add(event)
         db.session.commit()
@@ -89,7 +88,6 @@ def book(id):
 
     if form.validate():
         ticket_quantity = form.ticket_quantity.data
-        total_price = calculate_ticket_price(ticket_quantity)
         booking_reference = generate_booking_reference(event, current_user)
         ticket_type = form.ticket_type.data  # Get ticket_type from the form
 
@@ -106,15 +104,17 @@ def book(id):
         db.session.commit()
 
         flash(f'Your booking reference ID is {booking_reference}', 'success')
-        # Handle other booking-related actions here
-        # ...
-
     return redirect(url_for('event.show', id=id))
 
 # events.py
+
 @bp.route('/booking_history')
 @login_required
 def booking_history():
     # Query the database to get the user's booking history
     user_bookings = Booking.query.filter_by(user_id=current_user.id, is_history=True).all()
-    return render_template('events/history.html', user_bookings=user_bookings)
+    
+    # Query the events created by the user
+    user_events = current_user.events_created.all()
+    
+    return render_template('events/history.html', user_bookings=user_bookings, user_events=user_events)

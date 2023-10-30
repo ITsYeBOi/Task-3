@@ -9,10 +9,16 @@ class User(db.Model, UserMixin):
     name = db.Column(db.String(100), index=True, unique=True, nullable=False)  # User's name
     emailid = db.Column(db.String(100), index=True, nullable=False)  # User's email
     password_hash = db.Column(db.String(255), nullable=False)  # Hashed password
+    
     comments = db.relationship('Comment', backref='user')  # Relationship to comments
     
+    # Relationship to events created by the user
+    events_created = db.relationship('Event', backref='creator', lazy='dynamic')
+
     def __repr__(self):
         return f"Name: {self.name}"
+    
+    
 
 # Event model for storing event information
 class Event(db.Model):
@@ -25,7 +31,7 @@ class Event(db.Model):
     venue = db.Column(db.String(200))  # Event venue
     image = db.Column(db.String(400))  # Event image
     comments = db.relationship('Comment', backref='event')  # Relationship to comments
-
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     
     def __repr__(self):
         return f"Name: {self.name}"
